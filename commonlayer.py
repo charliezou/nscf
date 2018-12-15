@@ -74,10 +74,17 @@ class EncoderLayer:
         o_seq = self.attention([q_seq, k_seq, v_seq])
         return o_seq, v_seq 
   
+'''
+def create_n_attnlayer_v2(embedding_dim: int, n_size: int, num_layers: int, x, q_seq, k_seq, attn_dropout=None):        
+    for i in range(num_layers):        
+        q_seq_t, k_seq_t = EncoderLayer(embedding_dim, n_size, i, attn_dropout)(x, q_seq, Position_Embedding()(k_seq))
+        q_seq = Add()([q_seq, q_seq_t]) if i>0 else  q_seq_t      
+        k_seq = Add()([k_seq, k_seq_t]) if i>0 else  k_seq_t 
 
+    return q_seq, k_seq
+'''
 def create_n_attnlayer(embedding_dim: int, n_size: int, num_layers: int, x, q_seq, k_seq, attn_dropout=None):
-    k_seq = Position_Embedding()(k_seq)
-    
+    k_seq = Position_Embedding()(k_seq)    
     for i in range(num_layers):
         q_seq_t, k_seq_t = EncoderLayer(embedding_dim, n_size, i, attn_dropout)(x, q_seq, k_seq)
         q_seq = Add()([q_seq, q_seq_t]) if i>0 else  q_seq_t      

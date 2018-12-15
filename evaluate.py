@@ -4,6 +4,8 @@ Created on Tue Oct 30 10:40:22 2018
 
 @author: charliezou
 
+Some of the code is referenced from https://github.com/hexiangnan/neural_collaborative_filtering 
+
 """
 
 import math
